@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\AbsenceReason\DTO\" />
+    <Folder Include="Services\ApprovalRequest\DTO\" />
+    <Folder Include="Services\LeaveRequest\DTO\" />
+    <Folder Include="Services\Position\DTO\" />
+    <Folder Include="Services\Project\DTO\" />
+    <Folder Include="Services\Subdivision\DTO\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OutOfOffice.DAL\OutOfOffice.DAL.csproj" />
+  </ItemGroup>
+
+</Project>
