@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace OutOfOffice.DAL
 {
@@ -59,6 +60,10 @@ namespace OutOfOffice.DAL
             new ProjectStatusConfiguration().Configure(modelBuilder.Entity<ProjectStatus>());
 
             new LeaveRequestStatusConfiguration().Configure(modelBuilder.Entity<LeaveRequestStatus>());
+
+            new RoleConfiguration().Configure(modelBuilder.Entity<Role>());
+
+            new PermissionConfiguration().Configure(modelBuilder.Entity<Permission>());
 
             base.OnModelCreating(modelBuilder);
 

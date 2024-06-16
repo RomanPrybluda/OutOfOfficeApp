@@ -4,6 +4,8 @@
     {
         public Guid Id { get; set; }
 
+        public string? ProjectName { get; set; }
+
         public Guid ProjectTypeId { get; set; }
 
         public ProjectType? ProjectType { get; set; }

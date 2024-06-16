@@ -16,18 +16,11 @@ namespace OutOfOffice.DAL
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(lr => lr.AbsenceReason)
-                .IsRequired();
-
-            builder
                 .Property(lr => lr.StartDate)
                 .IsRequired();
 
             builder
-                .Property(lr => lr.EndDate).IsRequired();
-
-            builder
-                .Property(lr => lr.LeaveRequestStatus)
+                .Property(lr => lr.EndDate)
                 .IsRequired();
 
             builder
@@ -39,6 +32,11 @@ namespace OutOfOffice.DAL
                 .HasOne(lr => lr.AbsenceReason)
                 .WithMany(ar => ar.LeaveRequests)
                 .HasForeignKey(lr => lr.AbsenceReasonId);
+
+            builder
+                .HasOne(lr => lr.LeaveRequestStatus)
+                .WithMany(lrs => lrs.LeaveRequests)
+                .HasForeignKey(lr => lr.LeaveRequestStatusId);
         }
     }
 }

@@ -16,15 +16,11 @@ namespace OutOfOffice.DAL
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(p => p.ProjectType)
+                .Property(p => p.ProjectName)
                 .IsRequired();
 
             builder
                 .Property(p => p.StartDate)
-                .IsRequired();
-
-            builder
-                .Property(p => p.ProjectManager)
                 .IsRequired();
 
             builder
@@ -36,15 +32,13 @@ namespace OutOfOffice.DAL
                 .WithMany(pt => pt.Projects)
                 .HasForeignKey(p => p.ProjectTypeId);
 
-            builder
-                .HasOne(p => p.ProjectManager)
-                .WithMany(e => e.Projects)
-                .HasForeignKey(p => p.ProjectManagerId);
+            builder.HasOne(p => p.ProjectManager)
+                   .WithMany(e => e.ManagedProjects)
+                   .HasForeignKey(p => p.ProjectManagerId);
 
-            builder
-                .HasMany(p => p.Employees)
-                .WithMany(e => e.Projects)
-                .UsingEntity(j => j.ToTable("EmployeeToProject"));
+            builder.HasMany(p => p.Employees)
+                   .WithMany(e => e.ParticipatedProjects)
+                   .UsingEntity(j => j.ToTable("EmployeeProjects"));
         }
     }
 }

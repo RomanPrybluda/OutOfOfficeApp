@@ -3,20 +3,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace OutOfOffice.DAL
 {
-    public class SubdivisionConfiguration : IEntityTypeConfiguration<Subdivision>
+    public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
     {
-        public void Configure(EntityTypeBuilder<Subdivision> builder)
+        public void Configure(EntityTypeBuilder<Permission> builder)
         {
+            builder
+                .HasKey(p => p.Id);
 
             builder
-                .HasKey(sd => sd.Id);
-
-            builder
-                .Property(sd => sd.Id)
+                .Property(p => p.Id)
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(sd => sd.SubdivisionName)
+                .Property(p => p.PermissionName)
                 .IsRequired();
         }
     }

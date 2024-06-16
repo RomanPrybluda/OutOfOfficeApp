@@ -6,7 +6,7 @@
 
         public Guid EmployeeId { get; set; }
 
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
 
         public Guid AbsenceReasonId { get; set; }
 

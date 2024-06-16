@@ -19,22 +19,6 @@ namespace OutOfOffice.DAL
                 .IsRequired();
 
             builder
-                .Property(e => e.Subdivision)
-                .IsRequired();
-
-            builder
-                .Property(e => e.Position)
-                .IsRequired();
-
-            builder
-                .Property(e => e.EmployeeStatus)
-                .IsRequired();
-
-            builder
-                .Property(e => e.PeoplePartner)
-                .IsRequired();
-
-            builder
                 .Property(e => e.OutOfOfficeBalance)
                 .IsRequired();
 
@@ -49,10 +33,24 @@ namespace OutOfOffice.DAL
                 .HasForeignKey(e => e.PositionId);
 
             builder
+                .HasOne(e => e.EmployeeStatus)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeStatusId);
+
+            builder
                 .HasOne(e => e.PeoplePartner)
                 .WithMany()
                 .HasForeignKey(e => e.PeoplePartnerId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(e => e.ManagedProjects)
+                   .WithOne(p => p.ProjectManager)
+                   .HasForeignKey(p => p.ProjectManagerId);
+
+            builder.HasMany(e => e.ParticipatedProjects)
+                   .WithMany(p => p.Employees)
+                   .UsingEntity(j => j.ToTable("EmployeeProjects"));
+
         }
 
     }

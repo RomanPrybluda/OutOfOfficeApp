@@ -15,7 +15,8 @@ namespace OutOfOffice.DAL
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(ar => ar.LeaveRequestStatus).IsRequired();
+                .Property(ar => ar.LeaveRequestStatus)
+                .IsRequired();
 
             builder
                 .HasOne(ar => ar.Approver)
