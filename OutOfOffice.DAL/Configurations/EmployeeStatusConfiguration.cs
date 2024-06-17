@@ -8,10 +8,10 @@ namespace OutOfOffice.DAL
         public void Configure(EntityTypeBuilder<EmployeeStatus> builder)
         {
             builder
-                .HasKey(pt => pt.Id);
+                .HasKey(es => es.Id);
 
             builder
-                .Property(pt => pt.Id)
+                .Property(es => es.Id)
                 .HasDefaultValueSql("NEWID()");
 
             builder

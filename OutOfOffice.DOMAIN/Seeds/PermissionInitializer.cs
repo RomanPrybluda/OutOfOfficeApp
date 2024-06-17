@@ -16,19 +16,19 @@ namespace OutOfOffice.DOMAIN
 
             var permissionNames = Enum.GetNames(typeof(PermissionNames));
 
-            var existingPermissions = _context.Permissions.Select(r => r.PermissionName).ToList();
+            //var existingPermissions = _context.Permissions.Select(r => r.PermissionName).ToList();
 
-            foreach (var permissionName in permissionNames)
-            {
-                if (!existingPermissions.Contains(permissionName))
-                {
-                    _context.Permissions.Add(new Permission
-                    {
-                        Id = Guid.NewGuid(),
-                        PermissionName = permissionName
-                    });
-                }
-            }
+            //foreach (var permissionName in permissionNames)
+            //{
+            //    if (!existingPermissions.Contains(permissionName))
+            //    {
+            //        _context.Permissions.Add(new PermissionEntity
+            //        {
+            //            Id = Guid.NewGuid(),
+            //            PermissionName = permissionName
+            //        });
+            //    }
+            //}
 
             _context.SaveChanges();
         }

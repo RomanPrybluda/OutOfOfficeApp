@@ -23,6 +23,11 @@ namespace OutOfOffice.DAL
                 .IsRequired();
 
             builder
+                .HasOne(e => e.Role)
+                .WithMany(r => r.Employees)
+                .HasForeignKey(e => e.RoleId);
+
+            builder
                 .HasOne(e => e.Subdivision)
                 .WithMany(s => s.Employees)
                 .HasForeignKey(e => e.SubdivisionId);
@@ -34,7 +39,7 @@ namespace OutOfOffice.DAL
 
             builder
                 .HasOne(e => e.EmployeeStatus)
-                .WithMany()
+                .WithMany(p => p.Employees)
                 .HasForeignKey(e => e.EmployeeStatusId);
 
             builder
@@ -43,15 +48,15 @@ namespace OutOfOffice.DAL
                 .HasForeignKey(e => e.PeoplePartnerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(e => e.ManagedProjects)
-                   .WithOne(p => p.ProjectManager)
-                   .HasForeignKey(p => p.ProjectManagerId);
+            //builder
+            //    .HasMany(e => e.ManagedProjects)
+            //    .WithOne(p => p.ProjectManager)
+            //    .HasForeignKey(p => p.ProjectManagerId);
 
-            builder.HasMany(e => e.ParticipatedProjects)
-                   .WithMany(p => p.Employees)
-                   .UsingEntity(j => j.ToTable("EmployeeProjects"));
-
+            //builder
+            //    .HasMany(e => e.ParticipatedProjects)
+            //    .WithMany(p => p.Employees)
+            //    .UsingEntity(j => j.ToTable("EmployeeProjects"));
         }
-
     }
 }

@@ -15,19 +15,19 @@ namespace OutOfOffice.DOMAIN
         {
             var projectTypeNames = Enum.GetNames(typeof(ProjectTypes));
 
-            var existingProjectTypes = _context.ProjectTypes.Select(p => p.ProjectTypeName).ToList();
+            //var existingProjectTypes = _context.ProjectTypes.Select(p => p.ProjectTypeName).ToList();
 
-            foreach (var projectTypeName in projectTypeNames)
-            {
-                if (!existingProjectTypes.Contains(projectTypeName))
-                {
-                    _context.ProjectTypes.Add(new ProjectType
-                    {
-                        Id = Guid.NewGuid(),
-                        ProjectTypeName = projectTypeName
-                    });
-                }
-            }
+            //foreach (var projectTypeName in projectTypeNames)
+            //{
+            //    if (!existingProjectTypes.Contains(projectTypeName))
+            //    {
+            //        _context.ProjectTypes.Add(new ProjectTypeEntity
+            //        {
+            //            Id = Guid.NewGuid(),
+            //            ProjectTypeName = projectTypeName
+            //        });
+            //    }
+            //}
 
             _context.SaveChanges();
         }

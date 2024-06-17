@@ -8,14 +8,14 @@ namespace OutOfOffice.DAL
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder
-                .HasKey(p => p.Id);
+                .HasKey(r => r.Id);
 
             builder
-                .Property(p => p.Id)
+                .Property(r => r.Id)
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(p => p.RoleName)
+                .Property(r => r.RoleName)
                 .IsRequired();
         }
     }
