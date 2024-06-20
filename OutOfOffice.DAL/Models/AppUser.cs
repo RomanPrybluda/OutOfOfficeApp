@@ -4,9 +4,9 @@
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
 
-        public string Surname { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
 
         public string Email { get; set; } = string.Empty;
 
@@ -16,7 +16,7 @@
         {
             get
             {
-                return $"{Name.Trim()} {Surname.Trim()}";
+                return $"{FirstName.Trim()} {LastName.Trim()}";
             }
             set
             {
@@ -24,6 +24,6 @@
             }
         }
 
-        public Employee? Employee { get; set; }
+        public Employee? CurrentEmployee { get; set; }
     }
 }

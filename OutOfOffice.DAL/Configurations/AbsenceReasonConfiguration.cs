@@ -3,23 +3,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace OutOfOffice.DAL
 {
-    public class RoleConfiguration : IEntityTypeConfiguration<Role>
+    public class AbsenceReasonConfiguration : IEntityTypeConfiguration<AbsenceReason>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<AbsenceReason> builder)
         {
 
             builder
-                .ToTable("Role");
+                .ToTable("AbsenceReason");
 
             builder
-                .HasKey(r => r.Id);
+                .HasKey(ar => ar.Id);
 
             builder
-                .Property(r => r.Id)
+                .Property(ar => ar.Id)
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(r => r.RoleName)
+                .Property(ar => ar.AbsenceReasonName)
                 .IsRequired()
                 .HasMaxLength(50);
         }

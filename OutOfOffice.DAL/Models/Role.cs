@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-
-namespace OutOfOffice.DAL
+﻿namespace OutOfOffice.DAL
 {
     public class Role
     {
@@ -8,6 +6,6 @@ namespace OutOfOffice.DAL
 
         public string? RoleName { get; set; }
 
-        public ICollection<Employee> Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; } = new List<Employee>();
     }
 }

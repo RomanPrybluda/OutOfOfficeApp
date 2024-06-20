@@ -6,13 +6,19 @@ namespace OutOfOffice.DAL
     {
         public Guid Id { get; set; }
 
-        public AppUser? AppUser { get; set; }
+        public string FullName { get; set; } = string.Empty;
 
-        public string? FullName { get; set; }
+        public int OutOfOfficeBalance { get; set; }
+
+        public byte[] Photo { get; set; }
+
+        public Guid? AppUserId { get; set; }
+
+        public AppUser AppUser { get; set; }
 
         public Guid RoleId { get; set; }
 
-        public Role? Role { get; set; }
+        public Role Role { get; set; }
 
         public Guid SubdivisionId { get; set; }
 
@@ -20,27 +26,21 @@ namespace OutOfOffice.DAL
 
         public Guid PositionId { get; set; }
 
-        public Position? Position { get; set; }
+        public Position Position { get; set; }
 
         public Guid EmployeeStatusId { get; set; }
 
         public EmployeeStatus? EmployeeStatus { get; set; }
 
-        public Guid PeoplePartnerId { get; set; }
+        public Guid? PeoplePartnerId { get; set; }
 
-        public Employee? PeoplePartner { get; set; }
+        public Employee PeoplePartner { get; set; }
 
-        public int OutOfOfficeBalance { get; set; }
+        public ICollection<LeaveRequest> LeaveRequests { get; set; } = new List<LeaveRequest>();
 
-        public string? Photo { get; set; }
+        public ICollection<ApprovalRequest> ApprovalRequests { get; set; } = new List<ApprovalRequest>();
 
-        //public ICollection<LeaveRequestEntity>? LeaveRequests { get; set; }
-
-        //public ICollection<ProjectEntity>? ManagedProjects { get; set; } 
-
-        //public ICollection<ProjectEntity>? ParticipatedProjects { get; set; }
-
-        //public ICollection<ApprovalRequestEntity>? ApprovalRequests { get; set; }
+        public ICollection<ProjectEmployee> Projects { get; set; }
 
         public Employee()
         {

@@ -8,36 +8,44 @@ namespace OutOfOffice.DAL
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            builder
-                .HasKey(ap => ap.Id);
 
             builder
-                .Property(ap => ap.Id)
+                .ToTable("aupUser");
+
+            builder
+                .HasKey(au => au.Id);
+
+            builder
+                .Property(au => au.Id)
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(ap => ap.Name)
+                .Property(au => au.FirstName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder
+                .Property(au => au.LastName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder
+                .Property(au => au.Email)
                 .IsRequired();
 
             builder
-                .Property(ap => ap.Surname)
+                .Ignore(au => au.FullName);
+
+            builder
+                .Property(au => au.Password)
                 .IsRequired();
 
-            builder
-                .Property(ap => ap.Email)
-                .IsRequired();
+            builder.HasOne(au => au.CurrentEmployee)
+                   .WithOne(e => e.AppUser)
+                   .HasForeignKey<Employee>(e => e.AppUserId)
+                   .OnDelete(DeleteBehavior.NoAction);
 
-            builder
-                .Property(ap => ap.Password)
-                .IsRequired();
 
-            builder
-                .Property(ap => ap.FullName);
-
-            builder
-                .HasOne(ap => ap.Employee)
-                .WithOne(e => e.AppUser)
-                .HasForeignKey<Employee>(e => e.Id);
         }
     }
 }

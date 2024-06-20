@@ -7,6 +7,10 @@ namespace OutOfOffice.DAL
     {
         public void Configure(EntityTypeBuilder<EmployeeStatus> builder)
         {
+
+            builder
+                .ToTable("EmployeeStatus");
+
             builder
                 .HasKey(es => es.Id);
 
@@ -16,7 +20,8 @@ namespace OutOfOffice.DAL
 
             builder
                 .Property(es => es.EmployeeStatusName)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(50);
         }
     }
 }

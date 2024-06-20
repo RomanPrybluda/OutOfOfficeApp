@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OutOfOffice.DAL;
 
@@ -11,9 +12,11 @@ using OutOfOffice.DAL;
 namespace OutOfOffice.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240618093758_mod2")]
+    partial class mod2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,25 +29,21 @@ namespace OutOfOffice.DAL.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AbsenceReasonName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AbsenceReason", (string)null);
+                    b.ToTable("AbsenceReason");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.ApprovalRequest", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ApproverId")
                         .HasColumnType("uniqueidentifier");
@@ -55,7 +54,7 @@ namespace OutOfOffice.DAL.Migrations
                     b.Property<Guid>("LeaveRequestId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RequestStatusId")
+                    b.Property<Guid?>("RequestStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -67,7 +66,7 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.HasIndex("RequestStatusId");
 
-                    b.ToTable("ApprovalRequest", (string)null);
+                    b.ToTable("ApprovalRequest");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Employee", b =>
@@ -76,9 +75,6 @@ namespace OutOfOffice.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWID()");
-
-                    b.Property<Guid?>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("EmployeeStatusId")
                         .HasColumnType("uniqueidentifier");
@@ -90,14 +86,16 @@ namespace OutOfOffice.DAL.Migrations
                     b.Property<int>("OutOfOfficeBalance")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("PeoplePartnerId")
+                    b.Property<Guid>("PeoplePartnerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("Photo")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("PositionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("RoleId")
@@ -108,21 +106,19 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId")
-                        .IsUnique()
-                        .HasFilter("[AppUserId] IS NOT NULL");
-
                     b.HasIndex("EmployeeStatusId");
 
                     b.HasIndex("PeoplePartnerId");
 
                     b.HasIndex("PositionId");
 
+                    b.HasIndex("ProjectId");
+
                     b.HasIndex("RoleId");
 
                     b.HasIndex("SubdivisionId");
 
-                    b.ToTable("Employee", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.EmployeeStatus", b =>
@@ -134,20 +130,18 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.Property<string>("EmployeeStatusName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmployeeStatus", (string)null);
+                    b.ToTable("EmployeeStatuses");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.LeaveRequest", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AbsenceReasonId")
                         .HasColumnType("uniqueidentifier");
@@ -175,7 +169,7 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.HasIndex("RequestStatusId");
 
-                    b.ToTable("LeaveRequest", (string)null);
+                    b.ToTable("LeaveRequest");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Models.AppUser", b =>
@@ -189,55 +183,25 @@ namespace OutOfOffice.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("aupUser", (string)null);
-                });
-
-            modelBuilder.Entity("OutOfOffice.DAL.Models.ProjectEmployee", b =>
-                {
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProjectId", "EmployeeId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("ProjectEmployee", (string)null);
-                });
-
-            modelBuilder.Entity("OutOfOffice.DAL.Permission", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
-
-                    b.Property<string>("PermissionName")
+                    b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permission", (string)null);
+                    b.ToTable("AppUsers");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Position", b =>
@@ -249,20 +213,18 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.Property<string>("PositionName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Position", (string)null);
+                    b.ToTable("Positions");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Project", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -270,11 +232,10 @@ namespace OutOfOffice.DAL.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProjectManagerId")
+                    b.Property<Guid?>("ProjectManagerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ProjectName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ProjectStatusId")
@@ -288,64 +249,55 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectManagerId")
-                        .IsUnique();
+                    b.HasIndex("ProjectManagerId");
 
                     b.HasIndex("ProjectStatusId");
 
                     b.HasIndex("ProjectTypeId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.ProjectStatus", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ProjectStatusName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectStatus", (string)null);
+                    b.ToTable("ProjectStatuses");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.ProjectType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ProjectTypeName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectType", (string)null);
+                    b.ToTable("ProjectType");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.RequestStatus", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RequestStatusName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("RequestStatus", (string)null);
+                    b.ToTable("RequestStatuses");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Role", b =>
@@ -355,19 +307,13 @@ namespace OutOfOffice.DAL.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWID()");
 
-                    b.Property<Guid?>("PermissionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("RoleName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PermissionId");
-
-                    b.ToTable("Role", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Subdivision", b =>
@@ -379,33 +325,30 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.Property<string>("SubdivisionName")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subdivision", (string)null);
+                    b.ToTable("Subdivisions");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.ApprovalRequest", b =>
                 {
                     b.HasOne("OutOfOffice.DAL.Employee", "Approver")
-                        .WithMany("ApprovalRequests")
+                        .WithMany()
                         .HasForeignKey("ApproverId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OutOfOffice.DAL.LeaveRequest", "LeaveRequest")
-                        .WithOne("CurrentApprovalRequest")
+                        .WithOne("ApprovalRequest")
                         .HasForeignKey("OutOfOffice.DAL.ApprovalRequest", "LeaveRequestId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OutOfOffice.DAL.RequestStatus", "RequestStatus")
                         .WithMany("ApprovalRequests")
-                        .HasForeignKey("RequestStatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("RequestStatusId");
 
                     b.Navigation("Approver");
 
@@ -416,38 +359,44 @@ namespace OutOfOffice.DAL.Migrations
 
             modelBuilder.Entity("OutOfOffice.DAL.Employee", b =>
                 {
-                    b.HasOne("OutOfOffice.DAL.Models.AppUser", "AppUser")
-                        .WithOne("CurrentEmployee")
-                        .HasForeignKey("OutOfOffice.DAL.Employee", "AppUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("OutOfOffice.DAL.EmployeeStatus", "EmployeeStatus")
                         .WithMany("Employees")
                         .HasForeignKey("EmployeeStatusId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OutOfOffice.DAL.Models.AppUser", "AppUser")
+                        .WithOne("Employee")
+                        .HasForeignKey("OutOfOffice.DAL.Employee", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OutOfOffice.DAL.Employee", "PeoplePartner")
                         .WithMany()
                         .HasForeignKey("PeoplePartnerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("OutOfOffice.DAL.Position", "Position")
                         .WithMany("Employees")
                         .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("OutOfOffice.DAL.Project", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("OutOfOffice.DAL.Role", "Role")
                         .WithMany("Employees")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OutOfOffice.DAL.Subdivision", "Subdivision")
                         .WithMany("Employees")
                         .HasForeignKey("SubdivisionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");
@@ -468,19 +417,19 @@ namespace OutOfOffice.DAL.Migrations
                     b.HasOne("OutOfOffice.DAL.AbsenceReason", "AbsenceReason")
                         .WithMany("LeaveRequests")
                         .HasForeignKey("AbsenceReasonId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OutOfOffice.DAL.Employee", "Employee")
-                        .WithMany("LeaveRequests")
+                        .WithMany()
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OutOfOffice.DAL.RequestStatus", "RequestStatus")
                         .WithMany("LeaveRequests")
                         .HasForeignKey("RequestStatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AbsenceReason");
@@ -490,43 +439,22 @@ namespace OutOfOffice.DAL.Migrations
                     b.Navigation("RequestStatus");
                 });
 
-            modelBuilder.Entity("OutOfOffice.DAL.Models.ProjectEmployee", b =>
-                {
-                    b.HasOne("OutOfOffice.DAL.Employee", "Employee")
-                        .WithMany("Projects")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OutOfOffice.DAL.Project", "Project")
-                        .WithMany("Employees")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Project");
-                });
-
             modelBuilder.Entity("OutOfOffice.DAL.Project", b =>
                 {
                     b.HasOne("OutOfOffice.DAL.Employee", "ProjectManager")
-                        .WithOne()
-                        .HasForeignKey("OutOfOffice.DAL.Project", "ProjectManagerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ProjectManagerId");
 
                     b.HasOne("OutOfOffice.DAL.ProjectStatus", "ProjectStatus")
                         .WithMany("Projects")
                         .HasForeignKey("ProjectStatusId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OutOfOffice.DAL.ProjectType", "ProjectType")
                         .WithMany("Projects")
                         .HasForeignKey("ProjectTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ProjectManager");
@@ -536,25 +464,9 @@ namespace OutOfOffice.DAL.Migrations
                     b.Navigation("ProjectType");
                 });
 
-            modelBuilder.Entity("OutOfOffice.DAL.Role", b =>
-                {
-                    b.HasOne("OutOfOffice.DAL.Permission", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("PermissionId");
-                });
-
             modelBuilder.Entity("OutOfOffice.DAL.AbsenceReason", b =>
                 {
                     b.Navigation("LeaveRequests");
-                });
-
-            modelBuilder.Entity("OutOfOffice.DAL.Employee", b =>
-                {
-                    b.Navigation("ApprovalRequests");
-
-                    b.Navigation("LeaveRequests");
-
-                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.EmployeeStatus", b =>
@@ -564,17 +476,12 @@ namespace OutOfOffice.DAL.Migrations
 
             modelBuilder.Entity("OutOfOffice.DAL.LeaveRequest", b =>
                 {
-                    b.Navigation("CurrentApprovalRequest");
+                    b.Navigation("ApprovalRequest");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Models.AppUser", b =>
                 {
-                    b.Navigation("CurrentEmployee");
-                });
-
-            modelBuilder.Entity("OutOfOffice.DAL.Permission", b =>
-                {
-                    b.Navigation("Roles");
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Position", b =>

@@ -7,6 +7,10 @@ namespace OutOfOffice.DAL
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
+
+            builder
+                .ToTable("Employee");
+
             builder
                 .HasKey(e => e.Id);
 
@@ -25,38 +29,39 @@ namespace OutOfOffice.DAL
             builder
                 .HasOne(e => e.Role)
                 .WithMany(r => r.Employees)
-                .HasForeignKey(e => e.RoleId);
+                .HasForeignKey(e => e.RoleId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(e => e.Subdivision)
                 .WithMany(s => s.Employees)
-                .HasForeignKey(e => e.SubdivisionId);
+                .HasForeignKey(e => e.SubdivisionId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(e => e.Position)
                 .WithMany(p => p.Employees)
-                .HasForeignKey(e => e.PositionId);
+                .HasForeignKey(e => e.PositionId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(e => e.EmployeeStatus)
                 .WithMany(p => p.Employees)
-                .HasForeignKey(e => e.EmployeeStatusId);
+                .HasForeignKey(e => e.EmployeeStatusId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(e => e.PeoplePartner)
                 .WithMany()
                 .HasForeignKey(e => e.PeoplePartnerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //builder
-            //    .HasMany(e => e.ManagedProjects)
-            //    .WithOne(p => p.ProjectManager)
-            //    .HasForeignKey(p => p.ProjectManagerId);
+            builder
+                .HasOne(e => e.AppUser)
+                .WithOne(e => e.CurrentEmployee)
+                .HasForeignKey<Employee>(e => e.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            //builder
-            //    .HasMany(e => e.ParticipatedProjects)
-            //    .WithMany(p => p.Employees)
-            //    .UsingEntity(j => j.ToTable("EmployeeProjects"));
         }
     }
 }

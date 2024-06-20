@@ -1,8 +1,5 @@
 ﻿using OutOfOffice.DAL;
 using OutOfOffice.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace OutOfOffice.DOMAIN
 {
@@ -64,11 +61,11 @@ namespace OutOfOffice.DOMAIN
                         var appUser = new AppUser
                         {
                             Id = Guid.NewGuid(),
-                            Name = Name,
-                            Surname = Surname,
+                            FirstName = Name,
+                            LastName = Surname,
                             Email = email,
                             Password = "hashedpassword",
-                            Employee = null
+                            CurrentEmployee = null
                         };
 
                         _context.AppUsers.Add(appUser);

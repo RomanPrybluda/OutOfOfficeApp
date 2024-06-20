@@ -3,23 +3,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace OutOfOffice.DAL
 {
-    public class RoleConfiguration : IEntityTypeConfiguration<Role>
+    public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<Permission> builder)
         {
 
             builder
-                .ToTable("Role");
+                .ToTable("Permission");
 
             builder
-                .HasKey(r => r.Id);
+                .HasKey(p => p.Id);
 
             builder
-                .Property(r => r.Id)
+                .Property(p => p.Id)
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(r => r.RoleName)
+                .Property(p => p.PermissionName)
                 .IsRequired()
                 .HasMaxLength(50);
         }

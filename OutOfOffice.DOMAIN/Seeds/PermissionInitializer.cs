@@ -22,7 +22,7 @@ namespace OutOfOffice.DOMAIN
             //{
             //    if (!existingPermissions.Contains(permissionName))
             //    {
-            //        _context.Permissions.Add(new PermissionEntity
+            //        _context.Permissions.Add(new Permission
             //        {
             //            Id = Guid.NewGuid(),
             //            PermissionName = permissionName

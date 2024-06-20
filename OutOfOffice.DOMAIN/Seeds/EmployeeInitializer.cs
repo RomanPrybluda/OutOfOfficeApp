@@ -1,6 +1,4 @@
 ﻿using OutOfOffice.DAL;
-using System;
-using System.Linq;
 
 namespace OutOfOffice.DOMAIN
 {
@@ -18,7 +16,7 @@ namespace OutOfOffice.DOMAIN
             var existingEmployeeNames = _context.Employees.Select(e => e.FullName).ToList();
 
             var appUsersWithoutEmployees = _context.AppUsers
-                .Where(u => u.Employee == null)
+                .Where(u => u.CurrentEmployee == null)
                 .Take(100 - _context.Employees.Count())
                 .ToList();
 
