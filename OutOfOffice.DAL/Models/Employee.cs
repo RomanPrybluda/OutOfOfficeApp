@@ -36,6 +36,8 @@ public class Employee
 
     public ICollection<LeaveRequest>? LeaveRequests { get; set; } = new List<LeaveRequest>();
 
+    public ICollection<ApprovalRequest> ApprovalRequests { get; set; }
+
     public Employee() { }
 
     public Employee(AppUser? appUser, string fullName)

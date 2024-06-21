@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OutOfOffice.DAL.Configurations;
 using OutOfOffice.DAL.Models;
 
 namespace OutOfOffice.DAL
@@ -38,6 +39,8 @@ namespace OutOfOffice.DAL
 
         public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
 
+        public DbSet<ApprovalRequest> ApprovalRequests { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             new AbsenceReasonConfiguration().Configure(modelBuilder.Entity<AbsenceReason>());
@@ -67,6 +70,8 @@ namespace OutOfOffice.DAL
             new PermissionConfiguration().Configure(modelBuilder.Entity<Permission>());
 
             new ProjectEmployeeConfiguration().Configure(modelBuilder.Entity<ProjectEmployee>());
+
+            new ApprovalRequestConfiguration().Configure(modelBuilder.Entity<ApprovalRequest>());
 
             base.OnModelCreating(modelBuilder);
 
