@@ -23,7 +23,7 @@ namespace OutOfOffice.DAL
 
             builder
                 .HasOne(pe => pe.Employee)
-                .WithMany(e => e.Projects)
+                .WithMany()
                 .HasForeignKey(pe => pe.EmployeeId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

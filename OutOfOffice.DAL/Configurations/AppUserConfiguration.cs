@@ -10,7 +10,7 @@ namespace OutOfOffice.DAL
         {
 
             builder
-                .ToTable("aupUser");
+                .ToTable("AppUser");
 
             builder
                 .HasKey(au => au.Id);

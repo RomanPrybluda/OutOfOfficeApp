@@ -39,16 +39,10 @@ namespace OutOfOffice.DAL
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                 .HasOne(lr => lr.RequestStatus)
-                 .WithMany(ar => ar.LeaveRequests)
-                 .HasForeignKey(lr => lr.RequestStatusId)
-                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                 .HasOne(lr => lr.CurrentApprovalRequest)
-                 .WithOne(ar => ar.LeaveRequest)
-                 .HasForeignKey<ApprovalRequest>(ar => ar.LeaveRequestId)
-                 .OnDelete(DeleteBehavior.SetNull);
+                .HasOne(lr => lr.RequestStatus)
+                .WithMany(rs => rs.LeaveRequests)
+                .HasForeignKey(lr => lr.RequestStatusId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

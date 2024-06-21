@@ -1,4 +1,4 @@
-﻿namespace OutOfOffice.DAL.Models
+﻿namespace OutOfOffice.DAL
 {
     public class AppUser
     {

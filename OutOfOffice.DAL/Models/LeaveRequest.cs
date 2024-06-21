@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
 
-        public Guid EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; }
 
         public Employee? Employee { get; set; }
 
@@ -21,7 +21,5 @@
         public Guid RequestStatusId { get; set; }
 
         public RequestStatus? RequestStatus { get; set; }
-
-        public ApprovalRequest? CurrentApprovalRequest { get; set; }
     }
 }

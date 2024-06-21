@@ -12,8 +12,6 @@ namespace OutOfOffice.DAL
 
         public DbSet<AbsenceReason> AbsenceReasons { get; set; }
 
-        public DbSet<ApprovalRequest> ApprovalRequests { get; set; }
-
         public DbSet<AppUser> AppUsers { get; set; }
 
         public DbSet<Employee> Employees { get; set; }
@@ -40,12 +38,9 @@ namespace OutOfOffice.DAL
 
         public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             new AbsenceReasonConfiguration().Configure(modelBuilder.Entity<AbsenceReason>());
-
-            new ApprovalRequestConfiguration().Configure(modelBuilder.Entity<ApprovalRequest>());
 
             new AppUserConfiguration().Configure(modelBuilder.Entity<AppUser>());
 

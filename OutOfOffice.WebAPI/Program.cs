@@ -27,23 +27,23 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     context.Database.Migrate();
 
-    //var appUserInitializer = new AppUserInitializer(context);
-    //appUserInitializer.InitializeAppUsers();
+    var appUserInitializer = new AppUserInitializer(context);
+    appUserInitializer.InitializeAppUsers();
 
-    //var roleInitializer = new RoleInitializer(context);
-    //roleInitializer.InitializeRoles();
+    var roleInitializer = new RoleInitializer(context);
+    roleInitializer.InitializeRoles();
 
-    //var positionInitializer = new PositionInitializer(context);
-    //positionInitializer.InitializePositions();
+    var positionInitializer = new PositionInitializer(context);
+    positionInitializer.InitializePositions();
 
-    //var subdivisionInitializer = new SubdivisionInitializer(context);
-    //subdivisionInitializer.InitializeSubdivisions();
+    var subdivisionInitializer = new SubdivisionInitializer(context);
+    subdivisionInitializer.InitializeSubdivisions();
 
-    //var employeeStatusInitializer = new EmployeeStatusInitializer(context);
-    //employeeStatusInitializer.InitializeEmployeeStatuses();
+    var employeeStatusInitializer = new EmployeeStatusInitializer(context);
+    employeeStatusInitializer.InitializeEmployeeStatuses();
 
-    //var projectTypeInitializer = new ProjectTypeInitializer(context);
-    //projectTypeInitializer.InitializeProjectTypes();
+    var projectTypeInitializer = new ProjectTypeInitializer(context);
+    projectTypeInitializer.InitializeProjectTypes();
 
     //var employeeInitializer = new EmployeeInitializer(context);
     //employeeInitializer.InitializeEmployees();

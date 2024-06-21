@@ -7,7 +7,6 @@ namespace OutOfOffice.DAL
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-
             builder
                 .ToTable("Employee");
 
@@ -30,25 +29,25 @@ namespace OutOfOffice.DAL
                 .HasOne(e => e.Role)
                 .WithMany(r => r.Employees)
                 .HasForeignKey(e => e.RoleId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(e => e.Subdivision)
                 .WithMany(s => s.Employees)
                 .HasForeignKey(e => e.SubdivisionId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(e => e.Position)
                 .WithMany(p => p.Employees)
                 .HasForeignKey(e => e.PositionId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(e => e.EmployeeStatus)
-                .WithMany(p => p.Employees)
+                .WithMany(es => es.Employees)
                 .HasForeignKey(e => e.EmployeeStatusId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(e => e.PeoplePartner)
@@ -58,10 +57,9 @@ namespace OutOfOffice.DAL
 
             builder
                 .HasOne(e => e.AppUser)
-                .WithOne(e => e.CurrentEmployee)
+                .WithOne(au => au.CurrentEmployee)
                 .HasForeignKey<Employee>(e => e.AppUserId)
-                .OnDelete(DeleteBehavior.NoAction);
-
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

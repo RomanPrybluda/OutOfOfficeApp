@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
 
-        public string? ProjectStatusName { get; set; }
+        public string ProjectStatusName { get; set; } = string.Empty;
 
         public ICollection<Project> Projects { get; set; } = new List<Project>();
     }
