@@ -267,6 +267,7 @@ namespace OutOfOffice.DAL.Migrations
                         .HasDefaultValueSql("NEWID()");
 
                     b.Property<string>("Comment")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
@@ -277,7 +278,8 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.Property<string>("ProjectName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<Guid>("ProjectStatusId")
                         .HasColumnType("uniqueidentifier");
@@ -297,7 +299,7 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.HasIndex("ProjectTypeId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.ProjectStatus", b =>
@@ -493,7 +495,7 @@ namespace OutOfOffice.DAL.Migrations
             modelBuilder.Entity("OutOfOffice.DAL.Models.ProjectEmployee", b =>
                 {
                     b.HasOne("Employee", "Employee")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -501,7 +503,7 @@ namespace OutOfOffice.DAL.Migrations
                     b.HasOne("OutOfOffice.DAL.Project", "Project")
                         .WithMany("Employees")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -512,9 +514,9 @@ namespace OutOfOffice.DAL.Migrations
             modelBuilder.Entity("OutOfOffice.DAL.Project", b =>
                 {
                     b.HasOne("Employee", "ProjectManager")
-                        .WithOne()
+                        .WithOne("ManagedProject")
                         .HasForeignKey("OutOfOffice.DAL.Project", "ProjectManagerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("OutOfOffice.DAL.ProjectStatus", "ProjectStatus")
@@ -548,6 +550,11 @@ namespace OutOfOffice.DAL.Migrations
                     b.Navigation("ApprovalRequests");
 
                     b.Navigation("LeaveRequests");
+
+                    b.Navigation("ManagedProject")
+                        .IsRequired();
+
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.AbsenceReason", b =>

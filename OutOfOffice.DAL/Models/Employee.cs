@@ -1,4 +1,5 @@
 ﻿using OutOfOffice.DAL;
+using OutOfOffice.DAL.Models;
 
 public class Employee
 {
@@ -36,7 +37,11 @@ public class Employee
 
     public ICollection<LeaveRequest>? LeaveRequests { get; set; } = new List<LeaveRequest>();
 
-    public ICollection<ApprovalRequest> ApprovalRequests { get; set; }
+    public ICollection<ApprovalRequest> ApprovalRequests { get; set; } = new List<ApprovalRequest>();
+
+    public ICollection<ProjectEmployee> Projects { get; set; } = new List<ProjectEmployee>();
+
+    public Project ManagedProject { get; set; } = null!;
 
     public Employee() { }
 

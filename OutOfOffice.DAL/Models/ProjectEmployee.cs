@@ -4,10 +4,10 @@
     {
         public Guid ProjectId { get; set; }
 
-        public Project? Project { get; set; }
+        public Project Project { get; set; } = null!;
 
         public Guid EmployeeId { get; set; }
 
-        public Employee? Employee { get; set; }
+        public Employee Employee { get; set; } = null!;
     }
 }

@@ -19,11 +19,11 @@ namespace OutOfOffice.DAL
                 .HasOne(pe => pe.Project)
                 .WithMany(p => p.Employees)
                 .HasForeignKey(pe => pe.ProjectId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(pe => pe.Employee)
-                .WithMany()
+                .WithMany(e => e.Projects)
                 .HasForeignKey(pe => pe.EmployeeId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

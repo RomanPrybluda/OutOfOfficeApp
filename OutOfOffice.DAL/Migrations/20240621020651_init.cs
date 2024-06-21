@@ -235,12 +235,12 @@ namespace OutOfOffice.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
-                    ProjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProjectName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ProjectTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProjectManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProjectStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -250,7 +250,8 @@ namespace OutOfOffice.DAL.Migrations
                         name: "FK_Projects_Employee_ProjectManagerId",
                         column: x => x.ProjectManagerId,
                         principalTable: "Employee",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Projects_ProjectStatus_ProjectStatusId",
                         column: x => x.ProjectStatusId,
@@ -261,6 +262,38 @@ namespace OutOfOffice.DAL.Migrations
                         column: x => x.ProjectTypeId,
                         principalTable: "ProjectType",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ApprovalRequests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
+                    ApproverId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LeaveRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RequestStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApprovalRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ApprovalRequests_Employee_ApproverId",
+                        column: x => x.ApproverId,
+                        principalTable: "Employee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApprovalRequests_LeaveRequest_LeaveRequestId",
+                        column: x => x.LeaveRequestId,
+                        principalTable: "LeaveRequest",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ApprovalRequests_RequestStatus_RequestStatusId",
+                        column: x => x.RequestStatusId,
+                        principalTable: "RequestStatus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -284,8 +317,24 @@ namespace OutOfOffice.DAL.Migrations
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApprovalRequests_ApproverId",
+                table: "ApprovalRequests",
+                column: "ApproverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApprovalRequests_LeaveRequestId",
+                table: "ApprovalRequests",
+                column: "LeaveRequestId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApprovalRequests_RequestStatusId",
+                table: "ApprovalRequests",
+                column: "RequestStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_AppUserId",
@@ -365,19 +414,22 @@ namespace OutOfOffice.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "LeaveRequest");
+                name: "ApprovalRequests");
 
             migrationBuilder.DropTable(
                 name: "ProjectEmployee");
+
+            migrationBuilder.DropTable(
+                name: "LeaveRequest");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "AbsenceReason");
 
             migrationBuilder.DropTable(
                 name: "RequestStatus");
-
-            migrationBuilder.DropTable(
-                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "Employee");

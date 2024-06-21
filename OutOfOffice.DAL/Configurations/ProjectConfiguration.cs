@@ -9,6 +9,9 @@ namespace OutOfOffice.DAL
         {
 
             builder
+                .ToTable("Projects");
+
+            builder
                 .HasKey(pr => pr.Id);
 
             builder
@@ -17,7 +20,8 @@ namespace OutOfOffice.DAL
 
             builder
                 .Property(p => p.ProjectName)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(255);
 
             builder
                 .Property(p => p.StartDate)
@@ -35,9 +39,16 @@ namespace OutOfOffice.DAL
 
             builder
                 .HasOne(p => p.ProjectManager)
+                .WithOne(e => e.ManagedProject)
+                   .HasForeignKey<Project>(p => p.ProjectManagerId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder
+                .HasMany(p => p.Employees)
                 .WithOne()
-                .HasForeignKey<Project>(p => p.ProjectManagerId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(pe => pe.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(p => p.ProjectStatus)

@@ -6,11 +6,11 @@ namespace OutOfOffice.DAL
     {
         public Guid Id { get; set; }
 
-        public string? ProjectName { get; set; }
+        public string ProjectName { get; set; } = string.Empty;
 
         public Guid ProjectTypeId { get; set; }
 
-        public ProjectType? ProjectType { get; set; }
+        public ProjectType ProjectType { get; set; } = null!;
 
         public DateTime StartDate { get; set; }
 
@@ -20,13 +20,13 @@ namespace OutOfOffice.DAL
 
         public Employee ProjectManager { get; set; } = null!;
 
-        public string? Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
 
         public Guid ProjectStatusId { get; set; }
 
-        public ProjectStatus? ProjectStatus { get; set; }
+        public ProjectStatus ProjectStatus { get; set; } = null!;
 
-        public ICollection<ProjectEmployee> Employees { get; set; }
+        public ICollection<ProjectEmployee> Employees { get; set; } = new List<ProjectEmployee>();
 
     }
 }
