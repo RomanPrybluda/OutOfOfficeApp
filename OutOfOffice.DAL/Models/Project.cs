@@ -1,12 +1,16 @@
-﻿namespace OutOfOffice.DAL
+﻿using OutOfOffice.DAL.Models;
+
+namespace OutOfOffice.DAL
 {
     public class Project
     {
         public Guid Id { get; set; }
 
+        public string ProjectName { get; set; } = string.Empty;
+
         public Guid ProjectTypeId { get; set; }
 
-        public ProjectType? ProjectType { get; set; }
+        public ProjectType ProjectType { get; set; } = null!;
 
         public DateTime StartDate { get; set; }
 
@@ -14,14 +18,15 @@
 
         public Guid ProjectManagerId { get; set; }
 
-        public Employee? ProjectManager { get; set; }
+        public Employee ProjectManager { get; set; } = null!;
 
-        public string? Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
 
         public Guid ProjectStatusId { get; set; }
 
-        public ProjectStatus? ProjectStatus { get; set; }
+        public ProjectStatus ProjectStatus { get; set; } = null!;
 
-        public ICollection<Employee>? Employees { get; set; }
+        public ICollection<ProjectEmployee> Employees { get; set; } = new List<ProjectEmployee>();
+
     }
 }

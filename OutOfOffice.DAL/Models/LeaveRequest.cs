@@ -4,24 +4,24 @@
     {
         public Guid Id { get; set; }
 
-        public Guid EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; }
 
-        public Employee Employee { get; set; }
+        public Employee Employee { get; set; } = null!;
 
         public Guid AbsenceReasonId { get; set; }
 
-        public AbsenceReason? AbsenceReason { get; set; }
+        public AbsenceReason AbsenceReason { get; set; } = null!;
 
         public DateTime StartDate { get; set; } = DateTime.UtcNow;
 
         public DateTime EndDate { get; set; } = DateTime.UtcNow;
 
-        public string? Comment { get; set; }
+        public string? Comment { get; set; } = string.Empty;
 
-        public Guid LeaveRequestStatusId { get; set; }
+        public Guid RequestStatusId { get; set; }
 
-        public LeaveRequestStatus? LeaveRequestStatus { get; set; }
+        public RequestStatus RequestStatus { get; set; } = null!;
 
-        public ICollection<ApprovalRequest>? ApprovalRequests { get; set; }
+        public ApprovalRequest ApprovalRequest { get; set; } = null!;
     }
 }

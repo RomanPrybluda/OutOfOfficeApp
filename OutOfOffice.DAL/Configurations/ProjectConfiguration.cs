@@ -9,6 +9,9 @@ namespace OutOfOffice.DAL
         {
 
             builder
+                .ToTable("Projects");
+
+            builder
                 .HasKey(pr => pr.Id);
 
             builder
@@ -16,35 +19,42 @@ namespace OutOfOffice.DAL
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(p => p.ProjectType)
-                .IsRequired();
+                .Property(p => p.ProjectName)
+                .IsRequired()
+                .HasMaxLength(255);
 
             builder
                 .Property(p => p.StartDate)
                 .IsRequired();
 
             builder
-                .Property(p => p.ProjectManager)
-                .IsRequired();
-
-            builder
-                .Property(p => p.ProjectStatus)
+                .Property(p => p.EndDate)
                 .IsRequired();
 
             builder
                 .HasOne(p => p.ProjectType)
                 .WithMany(pt => pt.Projects)
-                .HasForeignKey(p => p.ProjectTypeId);
+                .HasForeignKey(p => p.ProjectTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder
                 .HasOne(p => p.ProjectManager)
-                .WithMany(e => e.Projects)
-                .HasForeignKey(p => p.ProjectManagerId);
+                .WithOne(e => e.ManagedProject)
+                   .HasForeignKey<Project>(p => p.ProjectManagerId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
 
             builder
                 .HasMany(p => p.Employees)
-                .WithMany(e => e.Projects)
-                .UsingEntity(j => j.ToTable("EmployeeToProject"));
+                .WithOne()
+                .HasForeignKey(pe => pe.ProjectId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .HasOne(p => p.ProjectStatus)
+                .WithMany(ps => ps.Projects)
+                .HasForeignKey(p => p.ProjectStatusId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

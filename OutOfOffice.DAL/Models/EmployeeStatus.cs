@@ -1,10 +1,10 @@
 ﻿namespace OutOfOffice.DAL
 {
-    public class Subdivision
+    public class EmployeeStatus
     {
         public Guid Id { get; set; }
 
-        public string SubdivisionName { get; set; } = string.Empty;
+        public string EmployeeStatusName { get; set; } = string.Empty;
 
         public ICollection<Employee> Employees { get; set; } = new List<Employee>();
     }

@@ -3,10 +3,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace OutOfOffice.DAL
 {
-    public class LeaveRequestStatusConfiguration : IEntityTypeConfiguration<LeaveRequestStatus>
+    public class RequestStatusConfiguration : IEntityTypeConfiguration<RequestStatus>
     {
-        public void Configure(EntityTypeBuilder<LeaveRequestStatus> builder)
+        public void Configure(EntityTypeBuilder<RequestStatus> builder)
         {
+
+            builder
+                .ToTable("RequestStatus");
+
             builder
                 .HasKey(pt => pt.Id);
 
@@ -15,7 +19,7 @@ namespace OutOfOffice.DAL
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(rs => rs.LeaveRequestStatusName)
+                .Property(rs => rs.RequestStatusName)
                 .IsRequired();
         }
     }

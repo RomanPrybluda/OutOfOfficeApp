@@ -18,9 +18,8 @@ namespace OutOfOffice.DOMAIN
 
         public static Employee CreateEmployeeDTOToEmployee(CreateEmployeeDTO createEmployeeDTO)
         {
-            var employee = new Employee
+            var employee = new Employee(null, createEmployeeDTO.FullName) // Pass FullName to constructor
             {
-                FullName = createEmployeeDTO.FullName,
                 SubdivisionId = createEmployeeDTO.SubdivisionId,
                 PositionId = createEmployeeDTO.PositionId,
                 EmployeeStatusId = createEmployeeDTO.EmployeeStatusId,

@@ -3,23 +3,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace OutOfOffice.DAL
 {
-    public class ProjectTypeConfiguration : IEntityTypeConfiguration<ProjectType>
+    public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<ProjectType> builder)
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
 
             builder
-                .ToTable("ProjectType");
+                .ToTable("Role");
 
             builder
-                .HasKey(pt => pt.Id);
+                .HasKey(r => r.Id);
 
             builder
-                .Property(pt => pt.Id)
+                .Property(r => r.Id)
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(pt => pt.ProjectTypeName)
+                .Property(r => r.RoleName)
                 .IsRequired()
                 .HasMaxLength(50);
         }

@@ -95,7 +95,7 @@ namespace OutOfOffice.DOMAIN
                 throw new CustomException(CustomExceptionType.NotFound, "PeoplePartner must be an employee with the 'HR Manager' position");
 
 
-            request.UpdateEmployee(employee, request);
+            UpdateEmployeeDTO.UpdateEmployee(employee, request);
 
             await _context.SaveChangesAsync();
 

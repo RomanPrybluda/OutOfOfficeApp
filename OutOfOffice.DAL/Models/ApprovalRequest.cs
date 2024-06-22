@@ -4,18 +4,19 @@
     {
         public Guid Id { get; set; }
 
-        public Guid ApproverId { get; set; }
+        public Guid? ApproverId { get; set; }
 
-        public Employee? Approver { get; set; }
+        public Employee Approver { get; set; } = null!;
 
         public Guid LeaveRequestId { get; set; }
 
-        public LeaveRequest? LeaveRequest { get; set; }
+        public LeaveRequest LeaveRequest { get; set; } = null!;
 
-        public Guid LeaveRequestStatusId { get; set; }
+        public Guid RequestStatusId { get; set; }
 
-        public LeaveRequestStatus? LeaveRequestStatus { get; set; }
+        public RequestStatus RequestStatus { get; set; } = null!;
 
-        public string? Comment { get; set; }
+        public string Comment { get; set; } = string.Empty;
+
     }
 }

@@ -7,6 +7,10 @@ namespace OutOfOffice.DAL
     {
         public void Configure(EntityTypeBuilder<AbsenceReason> builder)
         {
+
+            builder
+                .ToTable("AbsenceReason");
+
             builder
                 .HasKey(ar => ar.Id);
 
@@ -16,7 +20,8 @@ namespace OutOfOffice.DAL
 
             builder
                 .Property(ar => ar.AbsenceReasonName)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(50);
         }
     }
 }

@@ -6,6 +6,6 @@
 
         public string? PositionName { get; set; }
 
-        public ICollection<Employee>? Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; } = new List<Employee>();
     }
 }

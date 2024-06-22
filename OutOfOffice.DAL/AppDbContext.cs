@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OutOfOffice.DAL.Configurations;
+using OutOfOffice.DAL.Models;
 
 namespace OutOfOffice.DAL
 {
@@ -11,7 +13,7 @@ namespace OutOfOffice.DAL
 
         public DbSet<AbsenceReason> AbsenceReasons { get; set; }
 
-        public DbSet<ApprovalRequest> ApprovalRequests { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
 
         public DbSet<Employee> Employees { get; set; }
 
@@ -29,18 +31,21 @@ namespace OutOfOffice.DAL
 
         public DbSet<ProjectStatus> ProjectStatuses { get; set; }
 
-        public DbSet<LeaveRequestStatus> RequestStatuses { get; set; }
+        public DbSet<RequestStatus> RequestStatuses { get; set; }
 
         public DbSet<Role> Roles { get; set; }
 
         public DbSet<Permission> Permissions { get; set; }
 
+        public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
+
+        public DbSet<ApprovalRequest> ApprovalRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             new AbsenceReasonConfiguration().Configure(modelBuilder.Entity<AbsenceReason>());
 
-            new ApprovalRequestConfiguration().Configure(modelBuilder.Entity<ApprovalRequest>());
+            new AppUserConfiguration().Configure(modelBuilder.Entity<AppUser>());
 
             new EmployeeConfiguration().Configure(modelBuilder.Entity<Employee>());
 
@@ -50,15 +55,23 @@ namespace OutOfOffice.DAL
 
             new ProjectConfiguration().Configure(modelBuilder.Entity<Project>());
 
-            new ProjectTypeConfiguration().Configure(modelBuilder.Entity<ProjectType>());
-
             new SubdivisionConfiguration().Configure(modelBuilder.Entity<Subdivision>());
+
+            new ProjectTypeConfiguration().Configure(modelBuilder.Entity<ProjectType>());
 
             new EmployeeStatusConfiguration().Configure(modelBuilder.Entity<EmployeeStatus>());
 
             new ProjectStatusConfiguration().Configure(modelBuilder.Entity<ProjectStatus>());
 
-            new LeaveRequestStatusConfiguration().Configure(modelBuilder.Entity<LeaveRequestStatus>());
+            new RequestStatusConfiguration().Configure(modelBuilder.Entity<RequestStatus>());
+
+            new RoleConfiguration().Configure(modelBuilder.Entity<Role>());
+
+            new PermissionConfiguration().Configure(modelBuilder.Entity<Permission>());
+
+            new ProjectEmployeeConfiguration().Configure(modelBuilder.Entity<ProjectEmployee>());
+
+            new ApprovalRequestConfiguration().Configure(modelBuilder.Entity<ApprovalRequest>());
 
             base.OnModelCreating(modelBuilder);
 

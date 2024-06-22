@@ -9,6 +9,9 @@ namespace OutOfOffice.DAL
         {
 
             builder
+                .ToTable("LeaveRequest");
+
+            builder
                 .HasKey(lr => lr.Id);
 
             builder
@@ -16,29 +19,30 @@ namespace OutOfOffice.DAL
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(lr => lr.AbsenceReason)
-                .IsRequired();
-
-            builder
                 .Property(lr => lr.StartDate)
                 .IsRequired();
 
             builder
-                .Property(lr => lr.EndDate).IsRequired();
-
-            builder
-                .Property(lr => lr.LeaveRequestStatus)
+                .Property(lr => lr.EndDate)
                 .IsRequired();
 
             builder
                 .HasOne(lr => lr.Employee)
                 .WithMany(e => e.LeaveRequests)
-                .HasForeignKey(lr => lr.EmployeeId);
+                .HasForeignKey(lr => lr.EmployeeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(lr => lr.AbsenceReason)
                 .WithMany(ar => ar.LeaveRequests)
-                .HasForeignKey(lr => lr.AbsenceReasonId);
+                .HasForeignKey(lr => lr.AbsenceReasonId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(lr => lr.RequestStatus)
+                .WithMany(rs => rs.LeaveRequests)
+                .HasForeignKey(lr => lr.RequestStatusId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

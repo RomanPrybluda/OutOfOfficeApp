@@ -9,6 +9,9 @@ namespace OutOfOffice.DAL
         {
 
             builder
+                .ToTable("Subdivision");
+
+            builder
                 .HasKey(sd => sd.Id);
 
             builder
@@ -16,8 +19,9 @@ namespace OutOfOffice.DAL
                 .HasDefaultValueSql("NEWID()");
 
             builder
-                .Property(s => s.SubdivisionName)
-                .IsRequired();
+                .Property(sd => sd.SubdivisionName)
+                .IsRequired()
+                .HasMaxLength(50);
         }
     }
 }

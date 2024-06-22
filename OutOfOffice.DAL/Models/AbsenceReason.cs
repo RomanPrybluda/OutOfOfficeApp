@@ -6,6 +6,6 @@
 
         public string? AbsenceReasonName { get; set; }
 
-        public ICollection<LeaveRequest>? LeaveRequests { get; set; }
+        public ICollection<LeaveRequest> LeaveRequests { get; set; } = new List<LeaveRequest>();
     }
 }

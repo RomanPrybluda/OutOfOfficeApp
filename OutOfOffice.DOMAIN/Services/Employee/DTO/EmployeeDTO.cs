@@ -14,7 +14,7 @@ namespace OutOfOffice.DOMAIN
 
         public Guid EmployeeStatusId { get; set; }
 
-        public Guid PeoplePartnerId { get; set; }
+        public Guid? PeoplePartnerId { get; set; }
 
         public int OutOfOfficeBalance { get; set; }
 
