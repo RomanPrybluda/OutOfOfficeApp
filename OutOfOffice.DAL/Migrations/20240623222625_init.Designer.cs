@@ -12,7 +12,7 @@ using OutOfOffice.DAL;
 namespace OutOfOffice.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240621020651_init")]
+    [Migration("20240623222625_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -55,9 +55,6 @@ namespace OutOfOffice.DAL.Migrations
                     b.Property<Guid>("PositionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("SubdivisionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -72,8 +69,6 @@ namespace OutOfOffice.DAL.Migrations
                     b.HasIndex("PeoplePartnerId");
 
                     b.HasIndex("PositionId");
-
-                    b.HasIndex("RoleId");
 
                     b.HasIndex("SubdivisionId");
 
@@ -122,7 +117,12 @@ namespace OutOfOffice.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("AppUser", (string)null);
                 });
@@ -213,21 +213,6 @@ namespace OutOfOffice.DAL.Migrations
                     b.ToTable("LeaveRequest", (string)null);
                 });
 
-            modelBuilder.Entity("OutOfOffice.DAL.Models.ProjectEmployee", b =>
-                {
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProjectId", "EmployeeId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("ProjectEmployee", (string)null);
-                });
-
             modelBuilder.Entity("OutOfOffice.DAL.Permission", b =>
                 {
                     b.Property<Guid>("Id")
@@ -303,6 +288,21 @@ namespace OutOfOffice.DAL.Migrations
                     b.HasIndex("ProjectTypeId");
 
                     b.ToTable("Projects", (string)null);
+                });
+
+            modelBuilder.Entity("OutOfOffice.DAL.ProjectEmployee", b =>
+                {
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProjectId", "EmployeeId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("ProjectEmployee", (string)null);
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.ProjectStatus", b =>
@@ -418,12 +418,6 @@ namespace OutOfOffice.DAL.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("OutOfOffice.DAL.Role", "Role")
-                        .WithMany("Employees")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("OutOfOffice.DAL.Subdivision", "Subdivision")
                         .WithMany("Employees")
                         .HasForeignKey("SubdivisionId")
@@ -438,9 +432,18 @@ namespace OutOfOffice.DAL.Migrations
 
                     b.Navigation("Position");
 
-                    b.Navigation("Role");
-
                     b.Navigation("Subdivision");
+                });
+
+            modelBuilder.Entity("OutOfOffice.DAL.AppUser", b =>
+                {
+                    b.HasOne("OutOfOffice.DAL.Role", "Role")
+                        .WithMany("AppUsers")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.ApprovalRequest", b =>
@@ -495,25 +498,6 @@ namespace OutOfOffice.DAL.Migrations
                     b.Navigation("RequestStatus");
                 });
 
-            modelBuilder.Entity("OutOfOffice.DAL.Models.ProjectEmployee", b =>
-                {
-                    b.HasOne("Employee", "Employee")
-                        .WithMany("Projects")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("OutOfOffice.DAL.Project", "Project")
-                        .WithMany("Employees")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Project");
-                });
-
             modelBuilder.Entity("OutOfOffice.DAL.Project", b =>
                 {
                     b.HasOne("Employee", "ProjectManager")
@@ -539,6 +523,25 @@ namespace OutOfOffice.DAL.Migrations
                     b.Navigation("ProjectStatus");
 
                     b.Navigation("ProjectType");
+                });
+
+            modelBuilder.Entity("OutOfOffice.DAL.ProjectEmployee", b =>
+                {
+                    b.HasOne("Employee", "Employee")
+                        .WithMany("Projects")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("OutOfOffice.DAL.Project", "Project")
+                        .WithMany("Employees")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Role", b =>
@@ -613,7 +616,7 @@ namespace OutOfOffice.DAL.Migrations
 
             modelBuilder.Entity("OutOfOffice.DAL.Role", b =>
                 {
-                    b.Navigation("Employees");
+                    b.Navigation("AppUsers");
                 });
 
             modelBuilder.Entity("OutOfOffice.DAL.Subdivision", b =>

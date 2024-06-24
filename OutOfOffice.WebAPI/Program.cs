@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using OutOfOffice.DAL;
 using OutOfOffice.DOMAIN;
+using OutOfOffice.DOMAIN.Seeds;
 using OutOfOffice.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddScoped<EmployeeService>();
+builder.Services.AddScoped<AppUserService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -27,11 +29,14 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     context.Database.Migrate();
 
-    var appUserInitializer = new AppUserInitializer(context);
-    appUserInitializer.InitializeAppUsers();
-
     var roleInitializer = new RoleInitializer(context);
     roleInitializer.InitializeRoles();
+
+    var adminInitializer = new AdminInitializer(context);
+    adminInitializer.InitializeAdmin();
+
+    var appUserInitializer = new AppUserInitializer(context);
+    appUserInitializer.InitializeAppUsers();
 
     var positionInitializer = new PositionInitializer(context);
     positionInitializer.InitializePositions();

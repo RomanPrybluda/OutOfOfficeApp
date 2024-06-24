@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OutOfOffice.DAL.Configurations;
-using OutOfOffice.DAL.Models;
 
 namespace OutOfOffice.DAL
 {

@@ -26,12 +26,6 @@ namespace OutOfOffice.DAL
                 .IsRequired();
 
             builder
-                .HasOne(e => e.Role)
-                .WithMany(r => r.Employees)
-                .HasForeignKey(e => e.RoleId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
                 .HasOne(e => e.Subdivision)
                 .WithMany(s => s.Employees)
                 .HasForeignKey(e => e.SubdivisionId)

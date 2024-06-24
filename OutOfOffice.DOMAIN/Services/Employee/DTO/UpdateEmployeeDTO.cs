@@ -1,6 +1,4 @@
-﻿using OutOfOffice.DAL;
-
-namespace OutOfOffice.DOMAIN
+﻿namespace OutOfOffice.DOMAIN
 {
     public class UpdateEmployeeDTO
     {

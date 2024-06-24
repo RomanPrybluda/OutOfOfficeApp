@@ -1,5 +1,4 @@
 ﻿using OutOfOffice.DAL;
-using OutOfOffice.DAL.Models;
 
 namespace OutOfOffice.DOMAIN
 {
@@ -51,20 +50,97 @@ namespace OutOfOffice.DOMAIN
                 var existingAppUserEmails = _context.AppUsers.Select(u => u.Email).ToList();
                 int index = 0;
 
-                for (int i = 0; i < usersToAdd; i++)
+
+                for (int i = 0; i < Math.Min(10, usersToAdd); i++)
                 {
                     var (Name, Surname) = appUserNames[index % appUserNames.Count];
-                    var email = $"{Name.ToLower()}.{Surname.ToLower()}@example.com";
+                    var email = $"{Name.ToLower()}.{Surname.ToLower()}@gmail.com";
 
                     if (!existingAppUserEmails.Contains(email))
                     {
+                        var role = _context.Roles.FirstOrDefault(r => r.RoleName == RoleNames.HRManager.ToString());
+
+                        if (role == null)
+                        {
+                            throw new Exception("Role 'HRManager' not found in the database.");
+                        }
+
                         var appUser = new AppUser
                         {
                             Id = Guid.NewGuid(),
                             FirstName = Name,
                             LastName = Surname,
                             Email = email,
-                            Password = "hashedpassword",
+                            Password = email,
+                            RoleId = role.Id,
+                            CurrentEmployee = null
+                        };
+
+                        _context.AppUsers.Add(appUser);
+                        existingAppUserEmails.Add(email);
+                        usersToAdd--;
+                    }
+
+                    index++;
+                }
+
+
+                for (int i = 0; i < Math.Min(15, usersToAdd); i++)
+                {
+                    var (Name, Surname) = appUserNames[index % appUserNames.Count];
+                    var email = $"{Name.ToLower()}.{Surname.ToLower()}@gmail.com";
+
+                    if (!existingAppUserEmails.Contains(email))
+                    {
+                        var role = _context.Roles.FirstOrDefault(r => r.RoleName == RoleNames.ProjectManager.ToString());
+
+                        if (role == null)
+                        {
+                            throw new Exception("Role 'ProjectManager' not found in the database.");
+                        }
+
+                        var appUser = new AppUser
+                        {
+                            Id = Guid.NewGuid(),
+                            FirstName = Name,
+                            LastName = Surname,
+                            Email = email,
+                            Password = email,
+                            RoleId = role.Id,
+                            CurrentEmployee = null
+                        };
+
+                        _context.AppUsers.Add(appUser);
+                        existingAppUserEmails.Add(email);
+                        usersToAdd--;
+                    }
+
+                    index++;
+                }
+
+
+                for (int i = 0; i < usersToAdd; i++)
+                {
+                    var (Name, Surname) = appUserNames[index % appUserNames.Count];
+                    var email = $"{Name.ToLower()}.{Surname.ToLower()}@gmail.com";
+
+                    if (!existingAppUserEmails.Contains(email))
+                    {
+                        var role = _context.Roles.FirstOrDefault(r => r.RoleName == RoleNames.Employee.ToString());
+
+                        if (role == null)
+                        {
+                            throw new Exception("Role 'Employee' not found in the database.");
+                        }
+
+                        var appUser = new AppUser
+                        {
+                            Id = Guid.NewGuid(),
+                            FirstName = Name,
+                            LastName = Surname,
+                            Email = email,
+                            Password = email,
+                            RoleId = role.Id,
                             CurrentEmployee = null
                         };
 
@@ -78,5 +154,6 @@ namespace OutOfOffice.DOMAIN
                 _context.SaveChanges();
             }
         }
+
     }
 }

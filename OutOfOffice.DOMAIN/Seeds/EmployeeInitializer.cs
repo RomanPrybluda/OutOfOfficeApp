@@ -24,7 +24,6 @@ namespace OutOfOffice.DOMAIN
             var defaultPositionId = _context.Positions.FirstOrDefault()?.Id ?? Guid.NewGuid();
             var defaultEmployeeStatusId = _context.EmployeeStatuses.FirstOrDefault()?.Id ?? Guid.NewGuid();
             var defaultPeoplePartnerId = _context.Employees.FirstOrDefault()?.Id ?? Guid.NewGuid();
-            var defaultRoleId = _context.Roles.FirstOrDefault()?.Id ?? Guid.NewGuid(); // Example of fetching a default role id
 
             foreach (var appUser in appUsersWithoutEmployees)
             {
@@ -37,7 +36,6 @@ namespace OutOfOffice.DOMAIN
                         PositionId = defaultPositionId,
                         EmployeeStatusId = defaultEmployeeStatusId,
                         PeoplePartnerId = defaultPeoplePartnerId,
-                        RoleId = defaultRoleId,
                         OutOfOfficeBalance = 0,
                         Photo = null
                     };

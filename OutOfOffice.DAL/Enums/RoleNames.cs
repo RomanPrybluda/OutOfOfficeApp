@@ -5,6 +5,6 @@
         Employee,
         HRManager,
         ProjectManager,
-        Administrator
+        Admin
     }
 }

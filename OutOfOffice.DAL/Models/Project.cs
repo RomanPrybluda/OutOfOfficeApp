@@ -1,6 +1,4 @@
-﻿using OutOfOffice.DAL.Models;
-
-namespace OutOfOffice.DAL
+﻿namespace OutOfOffice.DAL
 {
     public class Project
     {
