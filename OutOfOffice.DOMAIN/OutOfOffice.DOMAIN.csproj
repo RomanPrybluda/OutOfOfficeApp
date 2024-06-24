@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\AbsenceReason\DTO\" />
     <Folder Include="Services\ApprovalRequest\DTO\" />
     <Folder Include="Services\LeaveRequest\DTO\" />
     <Folder Include="Services\Project\DTO\" />

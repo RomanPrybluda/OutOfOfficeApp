@@ -12,6 +12,7 @@ builder.Services.AddScoped<AppUserService>();
 builder.Services.AddScoped<PositionService>();
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<SubdivisionService>();
+builder.Services.AddScoped<AbsenceReasonService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -49,6 +50,9 @@ using (var scope = app.Services.CreateScope())
 
     var employeeStatusInitializer = new EmployeeStatusInitializer(context);
     employeeStatusInitializer.InitializeEmployeeStatuses();
+
+    var absenceReasonInitializer = new AbsenceReasonInitializer(context);
+    absenceReasonInitializer.InitializeAbsenceReasons();
 
     var projectTypeInitializer = new ProjectTypeInitializer(context);
     projectTypeInitializer.InitializeProjectTypes();
