@@ -1,6 +1,4 @@
-﻿using OutOfOffice.DAL;
-
-namespace OutOfOffice.DOMAIN
+﻿namespace OutOfOffice.DOMAIN
 {
     public class CreateEmployeeDTO
     {
@@ -18,7 +16,7 @@ namespace OutOfOffice.DOMAIN
 
         public static Employee CreateEmployeeDTOToEmployee(CreateEmployeeDTO createEmployeeDTO)
         {
-            var employee = new Employee(null, createEmployeeDTO.FullName) // Pass FullName to constructor
+            var employee = new Employee(null, createEmployeeDTO.FullName)
             {
                 SubdivisionId = createEmployeeDTO.SubdivisionId,
                 PositionId = createEmployeeDTO.PositionId,

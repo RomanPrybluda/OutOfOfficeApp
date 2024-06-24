@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OutOfOffice.DAL;
 using OutOfOffice.DOMAIN;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace OutOfOffice.WebAPI.Controllers
+namespace OutOfOffice.WebAPI
 {
     [ApiController]
     [Produces("application/json")]

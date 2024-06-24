@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<AppUserService>();
+builder.Services.AddScoped<PositionService>();
+builder.Services.AddScoped<RoleService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
