@@ -11,6 +11,7 @@ builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<AppUserService>();
 builder.Services.AddScoped<PositionService>();
 builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<SubdivisionService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
