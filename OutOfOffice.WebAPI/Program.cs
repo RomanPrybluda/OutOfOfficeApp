@@ -20,11 +20,23 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
+    options.UseSqlServer(builder.Configuration.GetConnectionString(nameof(AppDbContext)),
         b => b.MigrationsAssembly("OutOfOffice.DAL"));
 });
 
 builder.Logging.AddConsole();
+
+builder.Services.AddCors(option =>
+{
+    option.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:5173/");
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+    });
+
+});
+
 
 var app = builder.Build();
 
@@ -67,6 +79,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 
