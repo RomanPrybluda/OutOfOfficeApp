@@ -6,6 +6,6 @@
 
         public string RoleName { get; set; } = string.Empty;
 
-        public ICollection<Employee> Employees { get; set; } = new List<Employee>();
+        public ICollection<AppUser> AppUsers { get; set; } = new List<AppUser>();
     }
 }

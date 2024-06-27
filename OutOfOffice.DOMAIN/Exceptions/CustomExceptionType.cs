@@ -14,6 +14,7 @@
         ProjectAlreadyExists = 24,
         RoleAlreadyExists = 25,
         ProjectTypeAlreadyExists = 26,
+        SubdivisionAlreadyExists = 27,
 
         EmployeeStatusAlreadyExists = 31,
         ProjectStatusAlreadyExists = 32,

@@ -24,21 +24,6 @@ namespace OutOfOffice.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppUser",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppUser", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EmployeeStatus",
                 columns: table => new
                 {
@@ -141,6 +126,28 @@ namespace OutOfOffice.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppUser",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUser", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppUser_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Employee",
                 columns: table => new
                 {
@@ -149,7 +156,6 @@ namespace OutOfOffice.DAL.Migrations
                     OutOfOfficeBalance = table.Column<int>(type: "int", nullable: false),
                     Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SubdivisionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PositionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EmployeeStatusId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -179,12 +185,6 @@ namespace OutOfOffice.DAL.Migrations
                         name: "FK_Employee_Position_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Position",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Employee_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -337,6 +337,11 @@ namespace OutOfOffice.DAL.Migrations
                 column: "RequestStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppUser_RoleId",
+                table: "AppUser",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employee_AppUserId",
                 table: "Employee",
                 column: "AppUserId",
@@ -357,11 +362,6 @@ namespace OutOfOffice.DAL.Migrations
                 name: "IX_Employee_PositionId",
                 table: "Employee",
                 column: "PositionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Employee_RoleId",
-                table: "Employee",
-                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_SubdivisionId",
@@ -450,10 +450,10 @@ namespace OutOfOffice.DAL.Migrations
                 name: "Position");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "Subdivision");
 
             migrationBuilder.DropTable(
-                name: "Subdivision");
+                name: "Role");
 
             migrationBuilder.DropTable(
                 name: "Permission");

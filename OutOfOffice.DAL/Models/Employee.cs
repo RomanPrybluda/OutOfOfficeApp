@@ -1,5 +1,4 @@
 ﻿using OutOfOffice.DAL;
-using OutOfOffice.DAL.Models;
 
 public class Employee
 {
@@ -14,10 +13,6 @@ public class Employee
     public Guid? AppUserId { get; set; }
 
     public AppUser? AppUser { get; set; }
-
-    public Guid RoleId { get; set; }
-
-    public Role Role { get; set; }
 
     public Guid SubdivisionId { get; set; }
 

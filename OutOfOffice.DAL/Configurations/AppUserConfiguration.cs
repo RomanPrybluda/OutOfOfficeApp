@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OutOfOffice.DAL.Models;
 
 namespace OutOfOffice.DAL
 {
@@ -40,10 +39,17 @@ namespace OutOfOffice.DAL
                 .Property(au => au.Password)
                 .IsRequired();
 
-            builder.HasOne(au => au.CurrentEmployee)
-                   .WithOne(e => e.AppUser)
-                   .HasForeignKey<Employee>(e => e.AppUserId)
-                   .OnDelete(DeleteBehavior.NoAction);
+            builder
+                .HasOne(au => au.CurrentEmployee)
+                .WithOne(e => e.AppUser)
+                .HasForeignKey<Employee>(e => e.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasOne(au => au.Role)
+                .WithMany(r => r.AppUsers)
+                .HasForeignKey(au => au.RoleId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
         }

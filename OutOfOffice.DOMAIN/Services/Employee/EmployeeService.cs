@@ -54,11 +54,11 @@ namespace OutOfOffice.DOMAIN
 
             if (peoplePartner == null)
                 throw new CustomException(CustomExceptionType.NotFound,
-                    $"No HR Manager found with id {request.PeoplePartnerId}");      
+                    $"No HR Manager found with id {request.PeoplePartnerId}");
 
             var positionName = Positions.HRManager.ToString();
             var position = await _context.Positions.FirstOrDefaultAsync(p => p.PositionName == positionName);
-            
+
             if (peoplePartner.PositionId != position.Id)
                 throw new CustomException(CustomExceptionType.NotFound, "PeoplePartner must be an employee with the 'HR Manager' position");
 
@@ -109,7 +109,7 @@ namespace OutOfOffice.DOMAIN
             var employee = await _context.Employees.FindAsync(id);
 
             if (employee == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"No employee found with id {id}");
+                throw new CustomException(CustomExceptionType.NotFound, $"Employee with id {id} wasn't found.");
 
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
