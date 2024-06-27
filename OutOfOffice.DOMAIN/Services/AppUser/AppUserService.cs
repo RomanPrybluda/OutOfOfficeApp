@@ -12,32 +12,39 @@ namespace OutOfOffice.DOMAIN
             _context = context;
         }
 
-        public async Task<IEnumerable<AppUserDTO>> GetAppUsersAsync()
+        public async Task<(IEnumerable<AppUserDTO>, int)> GetAppUsersAsync(int page, int pageSize)
         {
-            var appUsers = await _context.AppUsers.ToListAsync();
+            var totalUsers = await _context.AppUsers.CountAsync();
+            var appUsers = await _context.AppUsers
+                .Include(u => u.Role)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
 
-            if (appUsers == null)
+            if (appUsers == null || appUsers.Count == 0)
                 throw new CustomException(CustomExceptionType.NotFound, "AppUsers weren't found");
 
             var appUserDTOs = new List<AppUserDTO>();
 
             foreach (var appUser in appUsers)
             {
-                var appUserDTO = AppUserDTO.AppUserToAppUserDTO(appUser);
+                var appUserDTO = AppUserDTO.AppUserToAppUserDTO(appUser, appUser.Role);
                 appUserDTOs.Add(appUserDTO);
             }
 
-            return appUserDTOs;
+            return (appUserDTOs, totalUsers);
         }
 
         public async Task<AppUserByIdDTO> GetAppUserByIdAsync(Guid id)
         {
-            var appUsersById = await _context.AppUsers.FirstOrDefaultAsync(e => e.Id == id);
+            var appUser = await _context.AppUsers
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
-            if (appUsersById == null)
+            if (appUser == null)
                 throw new CustomException(CustomExceptionType.NotFound, $"AppUser with id {id} wasn't found.");
 
-            var appUserByIdDTO = AppUserByIdDTO.AppUserToAppUserDTO(appUsersById);
+            var appUserByIdDTO = AppUserByIdDTO.AppUserToAppUserDTO(appUser, appUser.Role);
 
             return appUserByIdDTO;
         }
@@ -64,9 +71,9 @@ namespace OutOfOffice.DOMAIN
 
             await _context.SaveChangesAsync();
 
-            var createdUser = await _context.AppUsers.FindAsync(appUser.Id);
+            var createdUser = await _context.AppUsers.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == appUser.Id);
 
-            var appUserDTO = AppUserDTO.AppUserToAppUserDTO(createdUser);
+            var appUserDTO = AppUserDTO.AppUserToAppUserDTO(createdUser, createdUser.Role);
 
             return appUserDTO;
         }
@@ -91,7 +98,9 @@ namespace OutOfOffice.DOMAIN
 
             await _context.SaveChangesAsync();
 
-            var updatedUserDTO = AppUserDTO.AppUserToAppUserDTO(appUser);
+            var updatedUser = await _context.AppUsers.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == id);
+
+            var updatedUserDTO = AppUserDTO.AppUserToAppUserDTO(updatedUser, updatedUser.Role);
 
             return updatedUserDTO;
         }
@@ -108,6 +117,5 @@ namespace OutOfOffice.DOMAIN
             _context.AppUsers.Remove(appUser);
             await _context.SaveChangesAsync();
         }
-
     }
 }

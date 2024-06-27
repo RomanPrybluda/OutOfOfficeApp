@@ -6,15 +6,15 @@ namespace OutOfOffice.DOMAIN
     {
         public Guid Id { get; set; }
 
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
-        public Guid RoleId { get; set; }
+        public string RoleName { get; set; } = string.Empty;
 
-        public static AppUserDTO AppUserToAppUserDTO(AppUser appUser)
+        public static AppUserDTO AppUserToAppUserDTO(AppUser appUser, Role role)
         {
             return new AppUserDTO
             {
@@ -22,7 +22,7 @@ namespace OutOfOffice.DOMAIN
                 FirstName = appUser.FirstName,
                 LastName = appUser.LastName,
                 Email = appUser.Email,
-                RoleId = appUser.RoleId
+                RoleName = role.RoleName
             };
         }
     }

@@ -19,10 +19,11 @@ namespace OutOfOffice.WebAPI
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllAppUsersAsyncAsync()
+        public async Task<ActionResult> GetAllAppUsersAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var employees = await _appUserService.GetAppUsersAsync();
-            return Ok(employees);
+            var (users, totalUsers) = await _appUserService.GetAppUsersAsync(page, pageSize);
+            Response.Headers.Add("X-Total-Count", totalUsers.ToString());
+            return Ok(users);
         }
 
         [HttpGet("{id:Guid}")]
