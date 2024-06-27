@@ -30,7 +30,7 @@ builder.Services.AddCors(option =>
 {
     option.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:5173/");
+        policy.WithOrigins("http://localhost:5173");
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
     });
@@ -80,15 +80,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors();
 
 app.UseHttpsRedirection();
 
+app.UseCors();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
