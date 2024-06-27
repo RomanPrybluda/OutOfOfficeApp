@@ -34,8 +34,6 @@ namespace OutOfOffice.DAL
 
         public DbSet<Role> Roles { get; set; }
 
-        public DbSet<Permission> Permissions { get; set; }
-
         public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
 
         public DbSet<ApprovalRequest> ApprovalRequests { get; set; }
@@ -65,8 +63,6 @@ namespace OutOfOffice.DAL
             new RequestStatusConfiguration().Configure(modelBuilder.Entity<RequestStatus>());
 
             new RoleConfiguration().Configure(modelBuilder.Entity<Role>());
-
-            new PermissionConfiguration().Configure(modelBuilder.Entity<Permission>());
 
             new ProjectEmployeeConfiguration().Configure(modelBuilder.Entity<ProjectEmployee>());
 
