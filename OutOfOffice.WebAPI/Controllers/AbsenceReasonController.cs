@@ -6,7 +6,7 @@ namespace OutOfOffice.WebAPI
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("AbsenceReason")]
+    [Route("absence-reason")]
 
     public class AbsenceReasonController : ControllerBase
     {

@@ -6,7 +6,7 @@ namespace OutOfOffice.WebAPI
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("Position")]
+    [Route("position")]
     public class PositionController : ControllerBase
     {
         private readonly PositionService _positionService;

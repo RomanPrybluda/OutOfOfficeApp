@@ -6,7 +6,7 @@ namespace OutOfOffice.WebAPI
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("Subdivision")]
+    [Route("subdivision")]
     public class SubdivisionController : ControllerBase
     {
         private readonly SubdivisionService _subdivisionService;

@@ -7,7 +7,7 @@ namespace OutOfOffice.WebAPI
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("Employee")]
+    [Route("employee")]
 
     public class EmployyController : ControllerBase
     {
