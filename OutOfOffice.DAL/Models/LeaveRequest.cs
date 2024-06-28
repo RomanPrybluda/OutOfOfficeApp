@@ -22,6 +22,6 @@
 
         public RequestStatus RequestStatus { get; set; } = null!;
 
-        public ApprovalRequest ApprovalRequest { get; set; } = null!;
+        public ApprovalRequest? ApprovalRequest { get; set; }
     }
 }

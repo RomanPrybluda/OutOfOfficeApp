@@ -28,8 +28,7 @@ namespace OutOfOffice.DAL
                 .IsRequired();
 
             builder
-                .Property(p => p.EndDate)
-                .IsRequired();
+                .Property(p => p.EndDate);
 
             builder
                 .HasOne(p => p.ProjectType)
@@ -40,8 +39,8 @@ namespace OutOfOffice.DAL
             builder
                 .HasOne(p => p.ProjectManager)
                 .WithOne(e => e.ManagedProject)
-                   .HasForeignKey<Project>(p => p.ProjectManagerId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey<Project>(p => p.ProjectManagerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             builder

@@ -36,7 +36,7 @@ public class Employee
 
     public ICollection<ProjectEmployee> Projects { get; set; } = new List<ProjectEmployee>();
 
-    public Project ManagedProject { get; set; } = null!;
+    public Project? ManagedProject { get; set; }
 
     public Employee() { }
 

@@ -1,4 +1,4 @@
-﻿using OutOfOffice.DAL; 
+﻿using OutOfOffice.DAL;
 
 
 namespace OutOfOffice.DOMAIN

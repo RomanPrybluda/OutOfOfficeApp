@@ -1,11 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using OutOfOffice.DAL;
 using OutOfOffice.DOMAIN;
-using OutOfOffice.DOMAIN.Seeds;
 using OutOfOffice.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<AppUserService>();
@@ -68,9 +66,23 @@ using (var scope = app.Services.CreateScope())
     var projectTypeInitializer = new ProjectTypeInitializer(context);
     projectTypeInitializer.InitializeProjectTypes();
 
-    //var employeeInitializer = new EmployeeInitializer(context);
-    //employeeInitializer.InitializeEmployees();
+    var projectStatusInitializer = new ProjectStatusInitializer(context);
+    projectStatusInitializer.InitializeProjectStatuses();
 
+    var requestStatusInitializer = new RequestStatusInitializer(context);
+    requestStatusInitializer.InitializeRequestStatuses();
+
+    var hrManagerInitializer = new HRManagerInitializer(context);
+    hrManagerInitializer.InitializeHRManagers();
+
+    var projectManagerInitializer = new ProjectManagerInitializer(context);
+    projectManagerInitializer.InitializeProjectManagers();
+
+    var employeeInitializer = new EmployeeInitializer(context);
+    employeeInitializer.InitializeEmployees();
+
+    var leaveRequestInitializer = new LeaveRequestInitializer(context);
+    leaveRequestInitializer.InitializeLeaveRequests();
 }
 
 if (app.Environment.IsDevelopment())
@@ -78,7 +90,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseHttpsRedirection();
 

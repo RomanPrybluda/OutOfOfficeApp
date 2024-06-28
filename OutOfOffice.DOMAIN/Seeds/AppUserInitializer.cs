@@ -38,20 +38,23 @@ namespace OutOfOffice.DOMAIN
                 ("Evan", "Coleman"), ("Leah", "Brooks"), ("Jason", "Flores"), ("Haley", "Peterson"),
                 ("Nolan", "Torres"), ("Anna", "Bennett"), ("Colton", "Washington"), ("Elizabeth", "Foster"),
                 ("Gavin", "Jenkins"), ("Layla", "Butler"), ("Nicholas", "Price"), ("Aria", "Hughes"),
-                ("Jordan", "Ward"), ("Addison", "Carter"), ("Tyler", "Ramirez"), ("Brooklyn", "Morris")
+                ("Jordan", "Ward"), ("Addison", "Carter"), ("Tyler", "Ramirez"), ("Brooklyn", "Morris"),
+                ("Jordan", "Long"), ("Addison", "Reed"), ("Tyler", "Perry"), ("Brooklyn", "Sanders")
             };
 
             var existingAppUserCount = _context.AppUsers.Count();
 
-            var usersToAdd = 100 - existingAppUserCount;
+            // Ensure we don't consider Admin role
+            var existingNonAdminAppUserCount = _context.AppUsers.Count(u => u.Role.RoleName != "Admin");
+            var usersToAdd = SeedConstants.NUMBER_OF_APP_USERS - existingNonAdminAppUserCount;
 
             if (usersToAdd > 0)
             {
                 var existingAppUserEmails = _context.AppUsers.Select(u => u.Email).ToList();
                 int index = 0;
 
-
-                for (int i = 0; i < Math.Min(10, usersToAdd); i++)
+                // Add HR Managers
+                for (int i = 0; i < Math.Min(SeedConstants.NUMBER_OF_HR_MANAGERS, usersToAdd); i++)
                 {
                     var (Name, Surname) = appUserNames[index % appUserNames.Count];
                     var email = $"{Name.ToLower()}.{Surname.ToLower()}@gmail.com";
@@ -84,8 +87,8 @@ namespace OutOfOffice.DOMAIN
                     index++;
                 }
 
-
-                for (int i = 0; i < Math.Min(15, usersToAdd); i++)
+                // Add Project Managers
+                for (int i = 0; i < Math.Min(SeedConstants.NUMBER_OF_PROJECT_MANAGERS, usersToAdd); i++)
                 {
                     var (Name, Surname) = appUserNames[index % appUserNames.Count];
                     var email = $"{Name.ToLower()}.{Surname.ToLower()}@gmail.com";
@@ -118,7 +121,7 @@ namespace OutOfOffice.DOMAIN
                     index++;
                 }
 
-
+                // Add remaining users as Employees
                 for (int i = 0; i < usersToAdd; i++)
                 {
                     var (Name, Surname) = appUserNames[index % appUserNames.Count];
@@ -154,6 +157,5 @@ namespace OutOfOffice.DOMAIN
                 _context.SaveChanges();
             }
         }
-
     }
 }

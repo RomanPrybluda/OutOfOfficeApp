@@ -8,6 +8,5 @@
 
         public ICollection<LeaveRequest> LeaveRequests { get; set; } = new List<LeaveRequest>();
 
-        //public ICollection<ApprovalRequest> ApprovalRequests { get; set; } = new List<ApprovalRequest>();
     }
 }
