@@ -5,11 +5,9 @@ using OutOfOffice.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<EmployeeService>();
 builder.Services.AddScoped<AppUserService>();
-builder.Services.AddScoped<PositionService>();
-builder.Services.AddScoped<SubdivisionService>();
-builder.Services.AddScoped<AbsenceReasonService>();
+builder.Services.AddScoped<EmployeeService>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
