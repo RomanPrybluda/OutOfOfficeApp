@@ -6,13 +6,13 @@
 
         public string? FullName { get; set; }
 
-        public Guid SubdivisionId { get; set; }
+        public string SubdivisionName { get; set; } = string.Empty;
 
-        public Guid PositionId { get; set; }
+        public string PositionName { get; set; } = string.Empty;
 
-        public Guid EmployeeStatusId { get; set; }
+        public string EmployeeStatusName { get; set; } = string.Empty;
 
-        public Guid? PeoplePartnerId { get; set; }
+        public string? PeoplePartnerName { get; set; }
 
         public int OutOfOfficeBalance { get; set; }
 
@@ -22,10 +22,10 @@
             {
                 Id = employee.Id,
                 FullName = employee.FullName,
-                SubdivisionId = employee.SubdivisionId,
-                PositionId = employee.PositionId,
-                EmployeeStatusId = employee.EmployeeStatusId,
-                PeoplePartnerId = employee.PeoplePartnerId,
+                SubdivisionName = employee.Subdivision?.SubdivisionName ?? string.Empty,
+                PositionName = employee.Position?.PositionName ?? string.Empty,
+                EmployeeStatusName = employee.EmployeeStatus?.EmployeeStatusName ?? string.Empty,
+                PeoplePartnerName = employee.PeoplePartner?.FullName,
                 OutOfOfficeBalance = employee.OutOfOfficeBalance
             };
         }

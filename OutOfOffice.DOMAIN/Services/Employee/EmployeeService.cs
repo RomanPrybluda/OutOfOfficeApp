@@ -14,7 +14,12 @@ namespace OutOfOffice.DOMAIN
 
         public async Task<IEnumerable<EmployeeDTO>> GetEmployeesListAsync()
         {
-            var employees = await _context.Employees.ToListAsync();
+            var employees = await _context.Employees
+                .Include(e => e.Subdivision)
+                .Include(e => e.Position)
+                .Include(e => e.EmployeeStatus)
+                .Include(e => e.PeoplePartner)
+                .ToListAsync();
 
             if (employees == null)
                 throw new CustomException(CustomExceptionType.NotFound, "No employees found");
@@ -32,7 +37,12 @@ namespace OutOfOffice.DOMAIN
 
         public async Task<EmployeeByIdDTO> GetEmployeeByIdAsync(Guid id)
         {
-            var employeeById = await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
+            var employeeById = await _context.Employees
+                .Include(e => e.Subdivision)
+                .Include(e => e.Position)
+                .Include(e => e.EmployeeStatus)
+                .Include(e => e.PeoplePartner)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
             if (employeeById == null)
                 throw new CustomException(CustomExceptionType.NotFound, $"No employee found with id {id}");

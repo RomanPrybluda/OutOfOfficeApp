@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\ApprovalRequest\DTO\" />
-    <Folder Include="Services\LeaveRequest\DTO\" />
-    <Folder Include="Services\Project\DTO\" />
+    <Folder Include="Services\ApprovalRequest\" />
+    <Folder Include="Services\LeaveRequest\" />
+    <Folder Include="Services\Project\" />
   </ItemGroup>
 
   <ItemGroup>
