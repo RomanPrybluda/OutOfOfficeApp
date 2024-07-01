@@ -14,7 +14,7 @@ namespace OutOfOffice.DOMAIN
 
         public string RoleName { get; set; } = string.Empty;
 
-        public static AppUserDTO AppUserToAppUserDTO(AppUser appUser, Role role)
+        public static AppUserDTO AppUserToAppUserDTO(AppUser appUser)
         {
             return new AppUserDTO
             {
@@ -22,7 +22,7 @@ namespace OutOfOffice.DOMAIN
                 FirstName = appUser.FirstName,
                 LastName = appUser.LastName,
                 Email = appUser.Email,
-                RoleName = role.RoleName
+                RoleName = appUser.Role.RoleName ?? string.Empty
             };
         }
     }

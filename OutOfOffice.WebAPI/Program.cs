@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<AppUserService>();
 builder.Services.AddScoped<EmployeeService>();
+builder.Services.AddScoped<LeaveRequestService>();
+builder.Services.AddScoped<ApprovalRequestService>();
+builder.Services.AddScoped<ProjectService>();
 
 
 builder.Services.AddControllers();

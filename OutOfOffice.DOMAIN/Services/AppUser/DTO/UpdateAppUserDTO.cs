@@ -4,11 +4,11 @@ namespace OutOfOffice.DOMAIN
 {
     public class UpdateAppUserDTO
     {
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
 
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         public Guid RoleId { get; set; }
 

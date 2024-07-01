@@ -22,7 +22,8 @@ namespace OutOfOffice.DOMAIN
                 .ToListAsync();
 
             if (employees == null)
-                throw new CustomException(CustomExceptionType.NotFound, "No employees found");
+                throw new CustomException(CustomExceptionType.NotFound,
+                    "No employees found");
 
             var employeeDTOs = new List<EmployeeDTO>();
 
@@ -45,7 +46,8 @@ namespace OutOfOffice.DOMAIN
                 .FirstOrDefaultAsync(e => e.Id == id);
 
             if (employeeById == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"No employee found with id {id}");
+                throw new CustomException(CustomExceptionType.NotFound,
+                    $"No employee found with id {id}");
 
             var employeeByIdDTO = EmployeeByIdDTO.EmployeeToEmployeeDTO(employeeById);
 
@@ -54,23 +56,27 @@ namespace OutOfOffice.DOMAIN
 
         public async Task<EmployeeDTO> CreateEmployeeAsync(CreateEmployeeDTO request)
         {
-            var employeeByFullName = await _context.Employees.FirstOrDefaultAsync(e => e.FullName == request.FullName);
+            var employeeByFullName = await _context.Employees
+                .FirstOrDefaultAsync(e => e.FullName == request.FullName);
 
             if (employeeByFullName != null)
                 throw new CustomException(CustomExceptionType.EmployeeAlreadyExists,
                     $"Employee with full name {request.FullName} already exists.");
 
-            var peoplePartner = await _context.Employees.FirstOrDefaultAsync(e => e.Id == request.PeoplePartnerId);
+            var peoplePartner = await _context.Employees
+                .FirstOrDefaultAsync(e => e.Id == request.PeoplePartnerId);
 
             if (peoplePartner == null)
                 throw new CustomException(CustomExceptionType.NotFound,
                     $"No HR Manager found with id {request.PeoplePartnerId}");
 
             var positionName = Positions.HRManager.ToString();
-            var position = await _context.Positions.FirstOrDefaultAsync(p => p.PositionName == positionName);
+            var position = await _context.Positions
+                .FirstOrDefaultAsync(p => p.PositionName == positionName);
 
             if (peoplePartner.PositionId != position.Id)
-                throw new CustomException(CustomExceptionType.NotFound, "PeoplePartner must be an employee with the 'HR Manager' position");
+                throw new CustomException(CustomExceptionType.NotFound,
+                    "PeoplePartner must be an employee with the 'HR Manager' position");
 
             var employee = CreateEmployeeDTO.CreateEmployeeDTOToEmployee(request);
 
@@ -90,26 +96,32 @@ namespace OutOfOffice.DOMAIN
             var employee = await _context.Employees.FindAsync(id);
 
             if (employee == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"No employee found with id {id}");
+                throw new CustomException(CustomExceptionType.NotFound,
+                    $"No employee found with id {id}");
 
-            var peoplePartner = await _context.Employees.FirstOrDefaultAsync(e => e.Id == request.PeoplePartnerId);
+            var peoplePartner = await _context.Employees
+                .FirstOrDefaultAsync(e => e.Id == request.PeoplePartnerId);
 
             if (peoplePartner == null)
                 throw new CustomException(CustomExceptionType.NotFound,
                     $"No HR Manager found with id {peoplePartner.Id}");
 
             var positionName = Positions.HRManager.ToString();
-            var position = await _context.Positions.FirstOrDefaultAsync(p => p.PositionName == positionName);
+            var position = await _context.Positions
+                .FirstOrDefaultAsync(p => p.PositionName == positionName);
 
             if (peoplePartner.PositionId != position.Id)
-                throw new CustomException(CustomExceptionType.NotFound, "PeoplePartner must be an employee with the 'HR Manager' position");
-
+                throw new CustomException(CustomExceptionType.NotFound,
+                    "PeoplePartner must be an employee with the 'HR Manager' position");
 
             UpdateEmployeeDTO.UpdateEmployee(employee, request);
 
             await _context.SaveChangesAsync();
 
-            var updatedEmployeeDTO = EmployeeByIdDTO.EmployeeToEmployeeDTO(employee);
+            var updatedEmployeeRequest = await _context.Employees
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            var updatedEmployeeDTO = EmployeeByIdDTO.EmployeeToEmployeeDTO(updatedEmployeeRequest);
 
             return updatedEmployeeDTO;
         }
@@ -119,7 +131,8 @@ namespace OutOfOffice.DOMAIN
             var employee = await _context.Employees.FindAsync(id);
 
             if (employee == null)
-                throw new CustomException(CustomExceptionType.NotFound, $"Employee with id {id} wasn't found.");
+                throw new CustomException(CustomExceptionType.NotFound,
+                    $"Employee with id {id} wasn't found.");
 
             _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
